@@ -7,7 +7,7 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Desktop\congestion-tax-calculator-main\netcore\congestion-tax-calculator-net-core.csproj" />
+    <ProjectReference Include="..\netcore\congestion-tax-calculator-net-core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">
