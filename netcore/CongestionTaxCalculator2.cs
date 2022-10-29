@@ -25,7 +25,7 @@ namespace congestion.calculator
             //Verify that this is for a single day
             var dateGroup = dates.GroupBy(d => d.Date);
             if (dateGroup.Count() != 1)
-                throw new Exception("This function only calculates tax for a single day.");
+                throw new DateOverflowException();
             var times = dateGroup.First();
 
             //Check if day is tax excempt
@@ -75,15 +75,49 @@ namespace congestion.calculator
 
         int RateAtTime(TimeSpan time) => Settings.Rates.TakeWhile(r => r.Start < time).Last().Fee;
 
+        public class DateOverflowException : Exception
+        {
+            public DateOverflowException() : base("This function only calculates tax for a single day.") { }
+        }
+
         public class TaxSettings
         {
-            public string[] TollFreeVehicles { get; set; }
-            public DayOfWeek[] TollFreeDaysOfWeek { get; set; }
-            public int[] TollFreeMonths { get; set; }
-            public DateTime[] Holidays { get; set; }
-            public RateDefinition[] Rates { get; set; }
-            public bool ApplySingleChargeRule { get; set; }
-            public int MaxDailyFee { get; set; }
+            public string[] TollFreeVehicles { get; set; } = new[]
+            {
+                "Motorcycle",
+                "Tractor",
+                "Emergency",
+                "Diplomat",
+                "Foreign",
+                "Military"
+            };
+            public DayOfWeek[] TollFreeDaysOfWeek { get; set; } = new[] { DayOfWeek.Saturday, DayOfWeek.Sunday };
+            public int[] TollFreeMonths { get; set; } = new[] { 7 };
+            public DateTime[] Holidays { get; set; } = new[]
+            {
+                new DateTime(2013, 1, 1),
+                new DateTime(2013, 3, 28), new DateTime(2013, 3, 29),
+                new DateTime(2013, 5, 1), new DateTime(2013, 5, 8), new DateTime(2013, 5, 9),
+                new DateTime(2013, 6, 5), new DateTime(2013, 6, 6), new DateTime(2013, 6, 21),
+                new DateTime(2013, 11, 1),
+                new DateTime(2013, 12, 24), new DateTime(2013, 12, 25),
+                new DateTime(2013, 12, 26), new DateTime(2013, 12, 31)
+            };
+            public RateDefinition[] Rates { get; set; } = new RateDefinition[]
+            {
+                new RateDefinition(new TimeSpan(00, 00, 0), 0),
+                new RateDefinition(new TimeSpan(06, 00, 0), 8),
+                new RateDefinition(new TimeSpan(06, 30, 0), 13),
+                new RateDefinition(new TimeSpan(07, 00, 0), 18),
+                new RateDefinition(new TimeSpan(08, 00, 0), 13),
+                new RateDefinition(new TimeSpan(08, 30, 0), 8),
+                new RateDefinition(new TimeSpan(15, 00, 0), 13),
+                new RateDefinition(new TimeSpan(15, 30, 0), 18),
+                new RateDefinition(new TimeSpan(17, 00, 0), 13),
+                new RateDefinition(new TimeSpan(18, 30, 0), 0)
+            };
+            public bool ApplySingleChargeRule { get; set; } = true;
+            public int MaxDailyFee { get; set; } = 60;
         }
         public struct RateDefinition { 
             public TimeSpan Start { get; set; } 
