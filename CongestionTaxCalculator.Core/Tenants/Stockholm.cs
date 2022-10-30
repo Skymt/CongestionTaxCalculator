@@ -20,8 +20,8 @@ namespace CongestionTaxCalculator.Core.Tenants
         public static readonly IRule[] Rules = new IRule[]
         {
             new SingleChargeRule(),
-            new TollFreeVehiclesRule(new[] { "Motorcycle", "Emergency", "Military" }),
             new TollFreeSaturdaySundayRule(),
+            new TollFreeVehiclesRule(new[] { "Motorcycle", "Bus", "Emergency", "Diplomat", "Foreign", "Military" }),
             new TollFreeHolidaysRule(),
             new TollFreeDayBeforeHolidaysRule(),
             new MaxChargeRule(maxCharge: 100)

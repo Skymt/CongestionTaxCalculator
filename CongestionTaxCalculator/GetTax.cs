@@ -15,7 +15,7 @@ namespace CongestionTaxCalculator
         [FunctionName("GetTax")]
         public IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "GetTax/{vehicleType}")]
-            [FromBody]string passages, [FromRoute] string vehicleType)
+            [FromBody] string passages, [FromRoute] string vehicleType)
         {
             var dates = passages.Split(',').Select(DateTime.Parse);
             var tax = _calculator.GetTax(vehicleType, dates.ToArray());
