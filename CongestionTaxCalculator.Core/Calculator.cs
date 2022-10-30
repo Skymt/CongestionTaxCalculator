@@ -5,8 +5,11 @@ namespace CongestionTaxCalculator.Core
     public class Calculator
     {
         readonly Rate[] _rates;
+        readonly IRule[]? _rules;
         public Calculator(Rate[] rates) => _rates = VerifyRates(rates);
+        public Calculator(Rate[] rates, IRule[]? rules) : this(rates) => _rules = rules;
 
+        public int GetTax(string vehicleType, DateTime[] passages) => GetTax(vehicleType, passages, _rules ?? Array.Empty<IRule>());
         public int GetTax(string vehicleType, DateTime[] passages, params IRule[] rules)
         {
             (var date, var times) = VerifyPassages(passages);

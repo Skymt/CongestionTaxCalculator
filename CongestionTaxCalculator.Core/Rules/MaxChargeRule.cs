@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CongestionTaxCalculator.Core.Rules
+﻿namespace CongestionTaxCalculator.Core.Rules
 {
     public class MaxChargeRule : IRule
     {
@@ -17,7 +11,7 @@ namespace CongestionTaxCalculator.Core.Rules
 
             List<(TimeSpan passage, int fee)> adjusted = new List<(TimeSpan passage, int fee)>();
             var total = 0;
-            foreach(var passage in passages)
+            foreach (var passage in passages)
             {
                 if (total + passage.fee >= _maxCharge)
                 {

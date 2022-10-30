@@ -6,7 +6,8 @@ namespace CongestionTaxCalculator.Core.Tenants
     {
         static Dictionary<string, (Rate[] rates, IRule[] rules)> tenantsCache { get; } = new()
         {
-            ["Gothenburg"] = (Gothenburg.Rates, Gothenburg.Rules)
+            ["Gothenburg"] = (Gothenburg.Rates, Gothenburg.Rules),
+            ["Stockholm"] = (Stockholm.Rates, Stockholm.Rules)
         };
         public static bool TryGetTenant(string tenantName, out (Rate[] rates, IRule[] rules) tenantSettings)
         {

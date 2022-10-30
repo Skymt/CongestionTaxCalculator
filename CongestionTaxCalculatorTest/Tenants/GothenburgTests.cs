@@ -27,22 +27,22 @@ namespace CongestionTaxCalculatorTest.Tenants
             Assert.IsNotNull(calculator);
         }
 
-        
+
         [TestMethod]
         public void Rates()
         {
-            var calculator= new Calculator(Settings.rates);
+            var calculator = new Calculator(Settings.rates);
             var passages = new TimeSpan[]
             {
                 new(06,00,30), new(06,30,30), new(07,00,30), new(08,00,30), new(08,30,30),
                 new(15,00,30), new(15,30,30), new(17,00,30), new(18,00,30), new(18,30,30)
             };
             var expectedFees = new[] { 8, 13, 18, 13, 8, 13, 18, 13, 8, 0 };
-            
+
             var expectedResults = passages.Zip(expectedFees).ToDictionary(t => t.First, t => t.Second);
             var actualResults = calculator.GetTolls(passages);
 
-            foreach(var result in actualResults)
+            foreach (var result in actualResults)
                 Assert.AreEqual(expectedResults[result.passage], result.fee);
         }
 

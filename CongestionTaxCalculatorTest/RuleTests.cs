@@ -46,7 +46,7 @@ namespace CongestionTaxCalculatorTest
 
             Assert.AreEqual(21, calc.GetTax(TaxedVehicle, pass));
 
-            var rule = new TollFreeHolidaysRule(DateTime.Parse("2013-12-24"));
+            var rule = new TollFreeHolidaysRule(includeDayBefore: true);
             Assert.AreEqual(0, calc.GetTax(TaxedVehicle, pass, rule));
         }
 
