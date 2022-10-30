@@ -9,7 +9,7 @@ namespace CongestionTaxCalculatorTest
         [TestMethod]
         public void Integrity()
         {
-            var rates = RatesBuilder.StartWith(fee: 0)
+            var rates = RatesBuilder.StartWith(offHoursFee: 0)
                 .ThenFrom(06, 00, fee: 8)
                 .Until(18, 00);
 
@@ -29,7 +29,7 @@ namespace CongestionTaxCalculatorTest
         [TestMethod]
         public void FaultyRateConfiguration()
         {
-            var buildFaultyRates = () => RatesBuilder.StartWith(fee: 0)
+            var buildFaultyRates = () => RatesBuilder.StartWith(offHoursFee: 0)
                 .ThenFrom(08, 00, fee: 13)
                 .ThenFrom(07, 00, fee: 21)
                 .Until(18, 30);

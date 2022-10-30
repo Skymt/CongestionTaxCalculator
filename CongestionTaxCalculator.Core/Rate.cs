@@ -7,10 +7,10 @@
         RatesBuilder() { }
         readonly List<Rate> rates = new();
         int OffHoursFee => rates.First().Fee;
-        public static RatesBuilder StartWith(int fee = 0)
+        public static RatesBuilder StartWith(int offHoursFee = 0)
         {
             var builder = new RatesBuilder();
-            builder.rates.Add(new(new(00, 00, 00), fee));
+            builder.rates.Add(new(new(00, 00, 00), offHoursFee));
             return builder;
         }
 

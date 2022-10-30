@@ -8,7 +8,7 @@ namespace CongestionTaxCalculatorTest
         [TestMethod]
         public void Integrity()
         {
-            var rates = RatesBuilder.StartWith()
+            var rates = RatesBuilder.StartWith(offHoursFee: 0)
                 .ThenFrom(06, 00, fee: 8)
                 .Until(18, 00);
 
@@ -22,6 +22,15 @@ namespace CongestionTaxCalculatorTest
 
             // Two passes in the morning, for 8 SEK each - one pass in evening, out of hours
             Assert.AreEqual(16, calc.GetTax(TaxedVehicle, pass));
+
+            var details = calc.GetTaxDetails(TaxedVehicle, pass);
+            // All passes are accounted for
+            Assert.AreEqual(pass.Length, details.Length);
+            
+            // No rules have supplied discounts
+            var discount = details.Sum(p => p.Discount);
+            Assert.AreEqual(0, discount);
+            
         }
 
         [TestMethod]
@@ -45,7 +54,7 @@ namespace CongestionTaxCalculatorTest
                 DateTime.Parse("2013-02-06 06:48:17"),
                 DateTime.Parse("2013-02-07 18:35:06")
             };
-            Assert.ThrowsException<Calculator.PassagesMayNotSpanSeveralDaysException>(() => Calculator.VerifyPassages(pass));
+            Assert.ThrowsException<Calculator.PassesMayNotSpanSeveralDaysException>(() => Calculator.VerifyPasses(pass));
         }
     }
 }

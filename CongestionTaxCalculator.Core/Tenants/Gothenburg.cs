@@ -5,7 +5,7 @@ namespace CongestionTaxCalculator.Core.Tenants
     internal class Gothenburg
     {
         public static readonly Rate[] Rates =
-            RatesBuilder.StartWith(fee: 0)
+            RatesBuilder.StartWith(offHoursFee: 0)
                 .ThenFrom(06, 00, fee: 8)
                 .ThenFrom(06, 30, fee: 13)
                 .ThenFrom(07, 00, fee: 18)
