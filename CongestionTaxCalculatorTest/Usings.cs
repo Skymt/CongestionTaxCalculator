@@ -1,7 +1,7 @@
 global using Microsoft.VisualStudio.TestTools.UnitTesting;
-global using static GlobalTestData;
+global using static Globals;
 
-static class GlobalTestData
+static class Globals
 {
     public static readonly string TaxedVehicle = "Car";
     public static readonly string TaxExcemptVehicle = "Motorcycle";

@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "congestion-tax-calculator-net-core", "netcore\congestion-tax-calculator-net-core.csproj", "{06899B83-58C8-4160-89A7-F7D9FBB15C46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongestionTaxCalculatorTest", "CongestionTaxCalculatorTest\CongestionTaxCalculatorTest.csproj", "{8936D4C8-CB14-4579-98A9-A71964153B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculatorTest", "CongestionTaxCalculatorTest\CongestionTaxCalculatorTest.csproj", "{8936D4C8-CB14-4579-98A9-A71964153B3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CongestionTaxCalculator.Core", "CongestionTaxCalculator.Core\CongestionTaxCalculator.Core.csproj", "{D5218D96-2B96-426E-A700-8FCE64F56B04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.Core", "CongestionTaxCalculator.Core\CongestionTaxCalculator.Core.csproj", "{D5218D96-2B96-426E-A700-8FCE64F56B04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

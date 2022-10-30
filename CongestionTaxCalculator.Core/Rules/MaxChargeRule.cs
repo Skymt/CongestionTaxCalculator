@@ -19,13 +19,16 @@ namespace CongestionTaxCalculator.Core.Rules
             var total = 0;
             foreach(var passage in passages)
             {
-                if(total + passage.fee > _maxCharge)
+                if (total + passage.fee >= _maxCharge)
                 {
-                    adjusted.Add((passage.passage, _maxCharge - total));
-                    break;
+                    var newFee = _maxCharge - total;
+                    adjusted.Add((passage.passage, newFee));
                 }
-                total += passage.fee;
-                adjusted.Add(passage);
+                else
+                {
+                    total += passage.fee;
+                    adjusted.Add(passage);
+                }
             }
             return adjusted.ToArray();
         }

@@ -7,6 +7,7 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CongestionTaxCalculator.Core\CongestionTaxCalculator.Core.csproj" />
     <ProjectReference Include="..\netcore\congestion-tax-calculator-net-core.csproj" />
   </ItemGroup>
   <ItemGroup>

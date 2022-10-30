@@ -12,7 +12,7 @@ namespace CongestionTaxCalculator
 {
     public static class Function1
     {
-        [FunctionName("GetTax")]
+        [FunctionName("GetTax1")]
         public static IActionResult GetTax1(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req)
         {
