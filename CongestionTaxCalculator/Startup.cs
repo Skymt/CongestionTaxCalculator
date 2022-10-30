@@ -15,13 +15,13 @@ namespace CongestionTaxCalculator
         public override void Configure(IFunctionsHostBuilder builder)
         {
             TollFreeHolidaysRule.HolidayChecker = new HolidayProvider();
+
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped(services =>
             {
                 var context = services.GetService<IHttpContextAccessor>();
-                if (context.HttpContext.Request.Headers.ContainsKey("Tenant"))
+                if (context.HttpContext.Request.Headers.TryGetValue("Tenant", out var tenant))
                 {
-                    string tenant = context.HttpContext.Request.Headers["Tenant"];
                     if (Tenants.TryGetTenant(tenant, out var settings))
                         return new Calculator(settings.rates, settings.rules);
                     return null;

@@ -14,7 +14,7 @@
 
             if (HolidayChecker.IsHoliday(date))
                 return Array.Empty<(TimeSpan, int)>();
-            
+
             return passages;
         }
         public class NoHolidayCheckerException : Exception
