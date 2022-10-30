@@ -18,7 +18,7 @@ namespace CongestionTaxCalculatorTest.Tenants
         }
 
         [TestMethod]
-        public void EnsureTenantGothenburg()
+        public void EnsureTenant()
         {
             var settingsExist = Core.TryGetTenant("Gothenburg", out var settings);
             Assert.AreEqual(true, settingsExist);
@@ -29,7 +29,7 @@ namespace CongestionTaxCalculatorTest.Tenants
 
         
         [TestMethod]
-        public void TestRates()
+        public void Rates()
         {
             var calculator= new Calculator(Settings.rates);
             var passages = new TimeSpan[]
@@ -125,6 +125,9 @@ namespace CongestionTaxCalculatorTest.Tenants
             };
             var tollFee = calculator.GetTax("Car", passages, rules);
             Assert.AreEqual(60, tollFee);
+
+            var noRulesTollFee = calculator.GetTax("Car", passages);
+            Assert.AreNotEqual(tollFee, noRulesTollFee);
         }
     }
 }
