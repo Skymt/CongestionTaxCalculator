@@ -9,8 +9,8 @@ namespace CongestionTaxCalculatorTest
         [TestMethod]
         public void Integrity()
         {
-            var rates = RatesBuilder.StartWith(offHoursFee: 0)
-                .ThenFrom(06, 00, useFee: 8)
+            var rates = RatesBuilder.StartWith(fee: 0)
+                .ThenFrom(06, 00, fee: 8)
                 .Until(18, 00);
 
             // Start: 00:00:00 Fee: 0
@@ -29,9 +29,9 @@ namespace CongestionTaxCalculatorTest
         [TestMethod]
         public void FaultyRateConfiguration()
         {
-            var buildFaultyRates = () => RatesBuilder.StartWith(offHoursFee: 0)
-                .ThenFrom(08, 00, useFee: 13)
-                .ThenFrom(07, 00, useFee: 21)
+            var buildFaultyRates = () => RatesBuilder.StartWith(fee: 0)
+                .ThenFrom(08, 00, fee: 13)
+                .ThenFrom(07, 00, fee: 21)
                 .Until(18, 30);
 
             Assert.ThrowsException<RatesNotInChronologicalOrderException>(buildFaultyRates);

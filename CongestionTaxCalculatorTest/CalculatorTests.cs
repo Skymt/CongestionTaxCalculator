@@ -9,7 +9,7 @@ namespace CongestionTaxCalculatorTest
         public void Integrity()
         {
             var rates = RatesBuilder.StartWith()
-                .ThenFrom(06, 00, useFee: 8)
+                .ThenFrom(06, 00, fee: 8)
                 .Until(18, 00);
 
             var calc = new Calculator(rates);

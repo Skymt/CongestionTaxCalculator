@@ -10,8 +10,8 @@ namespace CongestionTaxCalculatorTest
         public void SingleChargeRule()
         {
             var rates = RatesBuilder.StartWith()
-                .ThenFrom(06, 00, useFee: 8)
-                .ThenFrom(07, 00, useFee: 13)
+                .ThenFrom(06, 00, fee: 8)
+                .ThenFrom(07, 00, fee: 13)
                 .Until(18, 00);
 
             var calc = new Calculator(rates);
@@ -32,8 +32,8 @@ namespace CongestionTaxCalculatorTest
         public void TollFreeHolidayRule()
         {
             var rates = RatesBuilder.StartWith()
-                .ThenFrom(06, 00, useFee: 8)
-                .ThenFrom(07, 00, useFee: 13)
+                .ThenFrom(06, 00, fee: 8)
+                .ThenFrom(07, 00, fee: 13)
                 .Until(18, 00);
 
             var calc = new Calculator(rates);
@@ -54,8 +54,8 @@ namespace CongestionTaxCalculatorTest
         public void TollFreeDayBeforeHolidayRule()
         {
             var rates = RatesBuilder.StartWith()
-                .ThenFrom(06, 00, useFee: 8)
-                .ThenFrom(07, 00, useFee: 13)
+                .ThenFrom(06, 00, fee: 8)
+                .ThenFrom(07, 00, fee: 13)
                 .Until(18, 00);
 
             var calc = new Calculator(rates);
@@ -76,8 +76,8 @@ namespace CongestionTaxCalculatorTest
         public void TollFreeMonthOfJulyRule()
         {
             var rates = RatesBuilder.StartWith()
-                .ThenFrom(06, 00, useFee: 8)
-                .ThenFrom(07, 00, useFee: 13)
+                .ThenFrom(06, 00, fee: 8)
+                .ThenFrom(07, 00, fee: 13)
                 .Until(18, 00);
 
             var calc = new Calculator(rates);
@@ -98,8 +98,8 @@ namespace CongestionTaxCalculatorTest
         public void TollFreeSaturday()
         {
             var rates = RatesBuilder.StartWith()
-                .ThenFrom(06, 00, useFee: 8)
-                .ThenFrom(07, 00, useFee: 13)
+                .ThenFrom(06, 00, fee: 8)
+                .ThenFrom(07, 00, fee: 13)
                 .Until(18, 00);
 
             var calc = new Calculator(rates);
@@ -120,8 +120,8 @@ namespace CongestionTaxCalculatorTest
         public void TollFreeVehiclesRule()
         {
             var rates = RatesBuilder.StartWith()
-                .ThenFrom(06, 00, useFee: 8)
-                .ThenFrom(07, 00, useFee: 13)
+                .ThenFrom(06, 00, fee: 8)
+                .ThenFrom(07, 00, fee: 13)
                 .Until(18, 00);
 
             var calc = new Calculator(rates);

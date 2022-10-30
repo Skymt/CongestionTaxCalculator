@@ -5,13 +5,13 @@ using Core = CongestionTaxCalculator.Core.Tenants.Tenants;
 namespace CongestionTaxCalculatorTest.Tenants
 {
     [TestClass]
-    public class GothenburgTests
+    public class StockholmTests
     {
         static (Rate[] rates, IRule[] rules) Settings
         {
             get
             {
-                if (Core.TryGetTenant("Gothenburg", out var settings))
+                if (Core.TryGetTenant("Stockholm", out var settings))
                     return settings;
                 throw new Exception("Missing configuration");
             }
@@ -20,7 +20,7 @@ namespace CongestionTaxCalculatorTest.Tenants
         [TestMethod]
         public void EnsureTenant()
         {
-            var settingsExist = Core.TryGetTenant("Gothenburg", out var settings);
+            var settingsExist = Core.TryGetTenant("Stockholm", out var settings);
             Assert.AreEqual(true, settingsExist);
 
             var calculator = new Calculator(settings.rates);
@@ -37,7 +37,7 @@ namespace CongestionTaxCalculatorTest.Tenants
                 new(06,00,30), new(06,30,30), new(07,00,30), new(08,00,30), new(08,30,30),
                 new(15,00,30), new(15,30,30), new(17,00,30), new(18,00,30), new(18,30,30)
             };
-            var expectedFees = new[] { 8, 13, 18, 13, 8, 13, 18, 13, 8, 0 };
+            var expectedFees = new[] { 18, 23, 28, 23, 18, 23, 28, 23, 18, 0 };
 
             var expectedResults = passages.Zip(expectedFees).ToDictionary(t => t.First, t => t.Second);
             var actualResults = calculator.GetTolls(passages);
@@ -56,7 +56,7 @@ namespace CongestionTaxCalculatorTest.Tenants
                 new(2013, 01, 24, 06, 00, 30)
             };
             var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
-            Assert.AreEqual(8, tollFee);
+            Assert.AreEqual(18, tollFee);
 
             tollFee = calculator.GetTax(Globals.TaxExcemptVehicle, passages, rules);
             Assert.AreEqual(0, tollFee);
@@ -71,6 +71,7 @@ namespace CongestionTaxCalculatorTest.Tenants
             {
                 new(2013, 12, 24, 06, 00, 30)
             };
+
             var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
             Assert.AreEqual(0, tollFee);
         }
@@ -84,6 +85,7 @@ namespace CongestionTaxCalculatorTest.Tenants
             {
                 new(2013, 12, 23, 06, 00, 30)
             };
+
             var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
             Assert.AreEqual(0, tollFee);
         }
@@ -97,6 +99,7 @@ namespace CongestionTaxCalculatorTest.Tenants
             {
                 new(2013, 07, 24, 06, 00, 30)
             };
+
             var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
             Assert.AreEqual(0, tollFee);
         }
@@ -112,8 +115,9 @@ namespace CongestionTaxCalculatorTest.Tenants
                 new(2013, 01, 24, 07, 00, 30),
                 new(2013, 01, 24, 18, 10, 30)
             };
+
             var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
-            Assert.AreEqual(26, tollFee);
+            Assert.AreEqual(46, tollFee);
 
             var tollFeeNoRules = calculator.GetTax(TaxedVehicle, passages);
             Assert.AreNotEqual(tollFee, tollFeeNoRules);
@@ -137,7 +141,7 @@ namespace CongestionTaxCalculatorTest.Tenants
                 new(2013, 01, 24, 16, 36, 30)
             };
             var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
-            Assert.AreEqual(60, tollFee);
+            Assert.AreEqual(100, tollFee);
 
             var noRulesTollFee = calculator.GetTax(TaxedVehicle, passages);
             Assert.AreNotEqual(tollFee, noRulesTollFee);

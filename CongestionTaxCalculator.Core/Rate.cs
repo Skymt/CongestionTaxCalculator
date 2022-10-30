@@ -6,16 +6,16 @@
         RatesBuilder() { }
         readonly List<Rate> rates = new();
         int OffHoursFee => rates.First().Fee;
-        public static RatesBuilder StartWith(int offHoursFee = 0)
+        public static RatesBuilder StartWith(int fee = 0)
         {
             var builder = new RatesBuilder();
-            builder.rates.Add(new(new(00, 00, 00), offHoursFee));
+            builder.rates.Add(new(new(00, 00, 00), fee));
             return builder;
         }
 
-        public RatesBuilder ThenFrom(int hour, int minute, int useFee)
+        public RatesBuilder ThenFrom(int hour, int minute, int fee)
         {
-            rates.Add(new(new(hour, minute, 0), useFee));
+            rates.Add(new(new(hour, minute, 0), fee));
             return this;
         }
 
