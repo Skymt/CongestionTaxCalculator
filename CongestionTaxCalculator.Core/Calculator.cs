@@ -2,27 +2,36 @@
 
 namespace CongestionTaxCalculator.Core
 {
-    public class Calculator
+    
+    public sealed class Calculator
     {
         readonly Rate[] _rates;
         readonly IRule[]? _rules;
         public Calculator(Rate[] rates) => _rates = VerifyRates(rates);
         public Calculator(Rate[] rates, IRule[]? rules) : this(rates) => _rules = rules;
 
-        public int GetTax(string vehicleType, DateTime[] passages) => GetTax(vehicleType, passages, _rules ?? Array.Empty<IRule>());
-        public int GetTax(string vehicleType, DateTime[] passages, params IRule[] rules)
+        public Passage[] GetTaxDetails(string vehicleType, DateTime[] passages) => GetTaxDetails(vehicleType, passages, _rules ?? Array.Empty<IRule>());
+        public Passage[] GetTaxDetails(string vehicleType, DateTime[] passages, IRule[] rules)
         {
             (var date, var times) = VerifyPassages(passages);
-            var tolls = GetTolls(times);
+            var tolls = GetFees(times);
 
             foreach (var rule in rules)
             {
                 tolls = rule.Apply(vehicleType, date, tolls);
-                if (!tolls.Any()) return 0;
             }
-
-            return tolls.Sum(p => p.fee);
+            return tolls;
         }
+
+        public int GetTax(string vehicleType, DateTime[] passages) => GetTax(vehicleType, passages, _rules ?? Array.Empty<IRule>());
+        public int GetTax(string vehicleType, DateTime[] passages, params IRule[] rules) => GetTaxDetails(vehicleType, passages, rules).Sum(p => p.Fee);
+        
+        public Passage[] GetFees(TimeSpan[] passages)
+        {
+            int feeAtTime(TimeSpan time) => _rates.Where(r => r.Start < time).Last().Fee;
+            return passages.Select(p => new Passage(p, feeAtTime(p))).ToArray();
+        }
+        
 
         public static (DateTime date, TimeSpan[] passages) VerifyPassages(DateTime[] passages)
         {
@@ -34,14 +43,7 @@ namespace CongestionTaxCalculator.Core
 
             return (date, passageTimes.ToArray());
         }
-        public (TimeSpan passage, int fee)[] GetTolls(TimeSpan[] passages)
-        {
-            (TimeSpan passage, int fee) rateAtTime(TimeSpan time) => (time, _rates.Where(r => r.Start < time).Last().Fee);
-            var passageFees = passages.Select(rateAtTime);
-
-            return passageFees.ToArray();
-        }
-
+        
         public static Rate[] VerifyRates(IEnumerable<Rate> rates)
         {
             var previousRate = rates.First();
@@ -57,15 +59,15 @@ namespace CongestionTaxCalculator.Core
             }
             return rates.ToArray();
         }
-        public class FirstRateStartTimeNotFromMidnightException : Exception
+        public sealed class FirstRateStartTimeNotFromMidnightException : Exception
         {
             public FirstRateStartTimeNotFromMidnightException() : base("First rate must start from midnight (00:00)") { }
         }
-        public class RatesNotInChronologicalOrderException : Exception
+        public sealed class RatesNotInChronologicalOrderException : Exception
         {
             public RatesNotInChronologicalOrderException() : base("Order of rates is invalid") { }
         }
-        public class PassagesMayNotSpanSeveralDaysException : Exception
+        public sealed class PassagesMayNotSpanSeveralDaysException : Exception
         {
             public PassagesMayNotSpanSeveralDaysException() : base("This calculator only handles passages during a single day") { }
         }

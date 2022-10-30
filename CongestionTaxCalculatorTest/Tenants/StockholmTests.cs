@@ -40,10 +40,10 @@ namespace CongestionTaxCalculatorTest.Tenants
             var expectedFees = new[] { 18, 23, 28, 23, 18, 23, 28, 23, 18, 0 };
 
             var expectedResults = passages.Zip(expectedFees).ToDictionary(t => t.First, t => t.Second);
-            var actualResults = calculator.GetTolls(passages);
+            var actualResults = calculator.GetFees(passages);
 
             foreach (var result in actualResults)
-                Assert.AreEqual(expectedResults[result.passage], result.fee);
+                Assert.AreEqual(expectedResults[result.Time], result.Fee);
         }
 
         [TestMethod]
@@ -91,20 +91,6 @@ namespace CongestionTaxCalculatorTest.Tenants
         }
 
         [TestMethod]
-        public void TaxExcemptJuly()
-        {
-            (var rates, var rules) = Settings;
-            var calculator = new Calculator(rates);
-            var passages = new DateTime[]
-            {
-                new(2013, 07, 24, 06, 00, 30)
-            };
-
-            var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
-            Assert.AreEqual(0, tollFee);
-        }
-
-        [TestMethod]
         public void SingleCharge()
         {
             (var rates, var rules) = Settings;
@@ -138,13 +124,21 @@ namespace CongestionTaxCalculatorTest.Tenants
                 new(2013, 01, 24, 15, 15, 30),
                 new(2013, 01, 24, 15, 32, 30),
                 new(2013, 01, 24, 16, 05, 30),
-                new(2013, 01, 24, 16, 36, 30)
+                new(2013, 01, 24, 16, 36, 30),
+                new(2013, 01, 24, 17, 37, 30)
             };
             var tollFee = calculator.GetTax(TaxedVehicle, passages, rules);
             Assert.AreEqual(100, tollFee);
 
             var noRulesTollFee = calculator.GetTax(TaxedVehicle, passages);
             Assert.AreNotEqual(tollFee, noRulesTollFee);
+
+            var details = calculator.GetTaxDetails(TaxedVehicle, passages, rules);
+
+            var overflowPassage = details.Where(p => p.Fee > 0 && p.Discount > 0).First();
+            Assert.AreEqual(new TimeSpan(16, 36, 30), overflowPassage.Time);
+            Assert.AreEqual(21, overflowPassage.Fee);
+            Assert.AreEqual(7, overflowPassage.Discount);
         }
     }
 }

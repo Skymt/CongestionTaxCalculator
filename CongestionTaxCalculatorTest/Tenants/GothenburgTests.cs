@@ -40,10 +40,10 @@ namespace CongestionTaxCalculatorTest.Tenants
             var expectedFees = new[] { 8, 13, 18, 13, 8, 13, 18, 13, 8, 0 };
 
             var expectedResults = passages.Zip(expectedFees).ToDictionary(t => t.First, t => t.Second);
-            var actualResults = calculator.GetTolls(passages);
+            var actualResults = calculator.GetFees(passages);
 
             foreach (var result in actualResults)
-                Assert.AreEqual(expectedResults[result.passage], result.fee);
+                Assert.AreEqual(expectedResults[result.Time], result.Fee);
         }
 
         [TestMethod]

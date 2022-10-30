@@ -1,13 +1,15 @@
 ﻿namespace CongestionTaxCalculator.Core.Rules
 {
-    public class TollFreeVehiclesRule : IRule
+    public sealed class TollFreeVehiclesRule : IRule
     {
         readonly string[] _taxExcemptVehicleTypes;
         public TollFreeVehiclesRule(params string[] taxExcemptVehicleTypes) => _taxExcemptVehicleTypes = taxExcemptVehicleTypes;
-        public (TimeSpan passage, int fee)[] Apply(string vehicleType, DateTime date, (TimeSpan passage, int fee)[] passages)
+        public Passage[] Apply(string vehicleType, DateTime date, Passage[] passages)
         {
-            if (_taxExcemptVehicleTypes.Contains(vehicleType)) return Array.Empty<(TimeSpan, int)>();
+            if (_taxExcemptVehicleTypes.Contains(vehicleType)) 
+                return passages.Select(p => new Passage(p.Time, 0, Math.Max(p.Fee, p.Discount))).ToArray();
             return passages;
+
         }
     }
 }

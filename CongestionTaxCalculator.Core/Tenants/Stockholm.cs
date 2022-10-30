@@ -24,7 +24,7 @@ namespace CongestionTaxCalculator.Core.Tenants
             new TollFreeSaturdaySundayRule(),
             new TollFreeHolidaysRule(),
             new TollFreeDayBeforeHolidaysRule(),
-            new MaxChargeRule(100)
+            new MaxChargeRule(maxCharge: 100)
         };
     }
 }

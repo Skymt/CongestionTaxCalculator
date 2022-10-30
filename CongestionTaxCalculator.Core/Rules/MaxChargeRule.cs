@@ -1,30 +1,28 @@
 ﻿namespace CongestionTaxCalculator.Core.Rules
 {
-    public class MaxChargeRule : IRule
+    public sealed class MaxChargeRule : IRule
     {
         int _maxCharge;
         public MaxChargeRule(int maxCharge) => _maxCharge = maxCharge;
-        public (TimeSpan passage, int fee)[] Apply(string vehicleType, DateTime date, (TimeSpan passage, int fee)[] passages)
+        public Passage[] Apply(string vehicleType, DateTime date, Passage[] passages)
         {
-            if (passages.Sum(p => p.fee) < _maxCharge)
-                return passages;
-
-            List<(TimeSpan passage, int fee)> adjusted = new List<(TimeSpan passage, int fee)>();
+            List<Passage> adjustedPassages = new(passages.Length);
             var total = 0;
-            foreach (var passage in passages)
+            foreach(var passage in passages)
             {
-                if (total + passage.fee >= _maxCharge)
+                if(total + passage.Fee < _maxCharge)
                 {
-                    var newFee = _maxCharge - total;
-                    adjusted.Add((passage.passage, newFee));
+                    adjustedPassages.Add(passage);
+                    total += passage.Fee;
                 }
                 else
                 {
-                    total += passage.fee;
-                    adjusted.Add(passage);
+                    var newFee = _maxCharge - total;
+                    adjustedPassages.Add(new(passage.Time, newFee, passage.Fee - newFee));
+                    total += newFee;
                 }
             }
-            return adjusted.ToArray();
+            return adjustedPassages.ToArray();
         }
     }
 }

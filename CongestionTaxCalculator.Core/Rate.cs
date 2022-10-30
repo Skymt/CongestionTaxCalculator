@@ -1,6 +1,7 @@
 ﻿namespace CongestionTaxCalculator.Core
 {
-    public record Rate(TimeSpan Start, int Fee);
+    public sealed record Passage(TimeSpan Time, int Fee, int Discount = 0);
+    public sealed record Rate(TimeSpan Start, int Fee);
     public sealed class RatesBuilder
     {
         RatesBuilder() { }

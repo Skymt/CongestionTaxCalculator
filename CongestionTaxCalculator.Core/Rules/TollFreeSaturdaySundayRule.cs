@@ -1,12 +1,13 @@
 ﻿namespace CongestionTaxCalculator.Core.Rules
 {
-    public class TollFreeSaturdaySundayRule : IRule
+    public sealed class TollFreeSaturdaySundayRule : IRule
     {
-        public (TimeSpan passage, int fee)[] Apply(string vehicleType, DateTime date, (TimeSpan passage, int fee)[] passages)
+        public Passage[] Apply(string vehicleType, DateTime date, Passage[] passages)
         {
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
-                return Array.Empty<(TimeSpan, int)>();
+                return passages.Select(p => new Passage(p.Time, 0, Math.Max(p.Fee, p.Discount))).ToArray();
             return passages;
+
         }
     }
 }

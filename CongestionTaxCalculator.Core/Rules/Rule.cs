@@ -2,6 +2,6 @@
 {
     public interface IRule
     {
-        public (TimeSpan passage, int fee)[] Apply(string vehicleType, DateTime date, (TimeSpan passage, int fee)[] passages);
+        Passage[] Apply(string vehicleType, DateTime date, Passage[] passages);
     }
 }

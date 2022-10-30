@@ -1,10 +1,11 @@
 ﻿namespace CongestionTaxCalculator.Core.Rules
 {
-    public class TollFreeMonthOfJulyRule : IRule
+    public sealed class TollFreeMonthOfJulyRule : IRule
     {
-        public (TimeSpan passage, int fee)[] Apply(string vehicleType, DateTime date, (TimeSpan passage, int fee)[] passages)
+        public Passage[] Apply(string vehicleType, DateTime date, Passage[] passages)
         {
-            if (date.Month == 7) return Array.Empty<(TimeSpan, int)>();
+            if (date.Month == 7) 
+                return passages.Select(p => new Passage(p.Time, 0, Math.Max(p.Fee, p.Discount))).ToArray();
             return passages;
         }
     }

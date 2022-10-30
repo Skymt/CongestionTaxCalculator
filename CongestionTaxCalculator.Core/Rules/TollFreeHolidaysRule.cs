@@ -7,13 +7,13 @@
             public bool IsHoliday(DateTime date);
         }
         public static IHolidayChecker? HolidayChecker { get; set; }
-        public virtual (TimeSpan passage, int fee)[] Apply(string vehicleType, DateTime date, (TimeSpan passage, int fee)[] passages)
+        public virtual Passage[] Apply(string vehicleType, DateTime date, Passage[] passages)
         {
             if (HolidayChecker is null)
                 throw new NoHolidayCheckerException();
 
             if (HolidayChecker.IsHoliday(date))
-                return Array.Empty<(TimeSpan, int)>();
+                return passages.Select(p => new Passage(p.Time, 0, Math.Max(p.Fee, p.Discount))).ToArray();
 
             return passages;
         }
@@ -24,15 +24,15 @@
             { }
         }
     }
-    public class TollFreeDayBeforeHolidaysRule : TollFreeHolidaysRule
+    public sealed class TollFreeDayBeforeHolidaysRule : TollFreeHolidaysRule
     {
-        public override (TimeSpan passage, int fee)[] Apply(string vehicleType, DateTime date, (TimeSpan passage, int fee)[] passages)
+        public override Passage[] Apply(string vehicleType, DateTime date, Passage[] passages)
         {
             if (HolidayChecker is null)
                 throw new NoHolidayCheckerException();
 
             if (HolidayChecker.IsHoliday(date.AddDays(1)))
-                return Array.Empty<(TimeSpan, int)>();
+                return passages.Select(p => new Passage(p.Time, 0, Math.Max(p.Fee, p.Discount))).ToArray();
 
             return passages;
         }
