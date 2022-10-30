@@ -11,7 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CongestionTaxCalculator.Core\CongestionTaxCalculator.Core.csproj" />
-    <ProjectReference Include="..\netcore\congestion-tax-calculator-net-core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

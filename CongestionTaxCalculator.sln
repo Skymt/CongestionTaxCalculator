@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator", "CongestionTaxCalculator\CongestionTaxCalculator.csproj", "{52922E1A-64C3-4503-AA62-FA616437BFE2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "congestion-tax-calculator-net-core", "netcore\congestion-tax-calculator-net-core.csproj", "{06899B83-58C8-4160-89A7-F7D9FBB15C46}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculatorTest", "CongestionTaxCalculatorTest\CongestionTaxCalculatorTest.csproj", "{8936D4C8-CB14-4579-98A9-A71964153B3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CongestionTaxCalculator.Core", "CongestionTaxCalculator.Core\CongestionTaxCalculator.Core.csproj", "{D5218D96-2B96-426E-A700-8FCE64F56B04}"
@@ -21,10 +19,6 @@ Global
 		{52922E1A-64C3-4503-AA62-FA616437BFE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{52922E1A-64C3-4503-AA62-FA616437BFE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{52922E1A-64C3-4503-AA62-FA616437BFE2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06899B83-58C8-4160-89A7-F7D9FBB15C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06899B83-58C8-4160-89A7-F7D9FBB15C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06899B83-58C8-4160-89A7-F7D9FBB15C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06899B83-58C8-4160-89A7-F7D9FBB15C46}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8936D4C8-CB14-4579-98A9-A71964153B3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8936D4C8-CB14-4579-98A9-A71964153B3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8936D4C8-CB14-4579-98A9-A71964153B3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
