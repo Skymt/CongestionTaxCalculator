@@ -46,7 +46,29 @@ namespace CongestionTaxCalculatorTest
 
             Assert.AreEqual(21, calc.GetTax(TaxedVehicle, pass));
 
-            var rule = new TollFreeHolidaysRule(includeDayBefore: true);
+            var rule = new TollFreeHolidaysRule();
+            Assert.AreEqual(0, calc.GetTax(TaxedVehicle, pass, rule));
+        }
+
+        [TestMethod]
+        public void TollFreeDayBeforeHolidayRule()
+        {
+            var rates = RatesBuilder.StartWith()
+                .ThenFrom(06, 00, useFee: 8)
+                .ThenFrom(07, 00, useFee: 13)
+                .Until(18, 00);
+
+            var calc = new Calculator(rates);
+            var pass = new[]
+            {
+                DateTime.Parse("2013-12-23 06:48:17"),
+                DateTime.Parse("2013-12-23 07:13:21"),
+                DateTime.Parse("2013-12-23 18:35:06")
+            };
+
+            Assert.AreEqual(21, calc.GetTax(TaxedVehicle, pass));
+
+            var rule = new TollFreeDayBeforeHolidaysRule();
             Assert.AreEqual(0, calc.GetTax(TaxedVehicle, pass, rule));
         }
 
@@ -69,6 +91,28 @@ namespace CongestionTaxCalculatorTest
             Assert.AreEqual(21, calc.GetTax(TaxedVehicle, pass));
 
             var rule = new TollFreeMonthOfJulyRule();
+            Assert.AreEqual(0, calc.GetTax(TaxedVehicle, pass, rule));
+        }
+
+        [TestMethod]
+        public void TollFreeSaturday()
+        {
+            var rates = RatesBuilder.StartWith()
+                .ThenFrom(06, 00, useFee: 8)
+                .ThenFrom(07, 00, useFee: 13)
+                .Until(18, 00);
+
+            var calc = new Calculator(rates);
+            var pass = new[]
+            {
+                DateTime.Parse("2013-01-12 06:48:17"),
+                DateTime.Parse("2013-01-12 07:13:21"),
+                DateTime.Parse("2013-01-12 18:35:06")
+            };
+
+            Assert.AreEqual(21, calc.GetTax(TaxedVehicle, pass));
+
+            var rule = new TollFreeSaturdaySundayRule();
             Assert.AreEqual(0, calc.GetTax(TaxedVehicle, pass, rule));
         }
 

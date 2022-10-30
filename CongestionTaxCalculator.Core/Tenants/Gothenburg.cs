@@ -22,7 +22,9 @@ namespace CongestionTaxCalculator.Core.Tenants
             new SingleChargeRule(),
             new TollFreeMonthOfJulyRule(),
             new TollFreeVehiclesRule(new[] { "Motorcycle", "Tractor", "Emergency", "Diplomat", "Foreign", "Military" }),
-            new TollFreeHolidaysRule(includeDayBefore: true),
+            new TollFreeSaturdaySundayRule(),
+            new TollFreeHolidaysRule(),
+            new TollFreeDayBeforeHolidaysRule(),
             new MaxChargeRule(60)
         };
     }
