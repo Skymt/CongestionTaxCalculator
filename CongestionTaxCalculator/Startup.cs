@@ -14,9 +14,14 @@ namespace CongestionTaxCalculator
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            // Connect the core holiday rules with the nuget NordicHolidays.NET
             TollFreeHolidaysRule.HolidayChecker = new HolidayProvider();
 
+            // Context is used to determine what rules and rates the tax calculator should use
             builder.Services.AddHttpContextAccessor();
+
+            // The rules and rates are determined by the header "Tenant" in the http request.
+            // If header is missing, the rules for "Gothenburg" are used as defaults
             builder.Services.AddScoped(services =>
             {
                 var context = services.GetService<IHttpContextAccessor>();

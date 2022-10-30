@@ -18,7 +18,7 @@ namespace CongestionTaxCalculatorTest
             var pass = new[]
             {
                 DateTime.Parse("2013-02-06 06:48:17"),
-                DateTime.Parse("2013-02-06 07:13:21"),
+                DateTime.Parse("2013-02-06 07:22:21"),
                 DateTime.Parse("2013-02-06 18:35:06")
             };
 
