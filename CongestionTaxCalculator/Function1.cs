@@ -35,7 +35,7 @@ namespace CongestionTaxCalculator
                 {
                     settings = await JsonSerializer.DeserializeAsync<CongestionTaxCalculator2.TaxSettings>(req.Body, jsonSerializerOptions);
                 }
-                catch 
+                catch
                 {
                     settings = new();
                 }

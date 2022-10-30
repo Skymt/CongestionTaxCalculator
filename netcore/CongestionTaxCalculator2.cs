@@ -119,8 +119,9 @@ namespace congestion.calculator
             public bool ApplySingleChargeRule { get; set; } = true;
             public int MaxDailyFee { get; set; } = 60;
         }
-        public struct RateDefinition { 
-            public TimeSpan Start { get; set; } 
+        public struct RateDefinition
+        {
+            public TimeSpan Start { get; set; }
             public int Fee { get; set; }
             public RateDefinition(TimeSpan start, int fee)
             {

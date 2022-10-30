@@ -1,5 +1,4 @@
 using System;
-using congestion.calculator;
 
 namespace congestion.calculator
 {
@@ -42,7 +41,7 @@ namespace congestion.calculator
             return totalFee;
         }
 
-        private bool IsTollFreeVehicle(Vehicle vehicle) => 
+        private bool IsTollFreeVehicle(Vehicle vehicle) =>
             Enum.TryParse<TollFreeVehicles>(vehicle.GetVehicleType(), out var _);
 
         public int GetTollFee(DateTime date, Vehicle vehicle)
